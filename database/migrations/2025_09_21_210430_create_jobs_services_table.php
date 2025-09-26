@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('jobs_services', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('service_id');
+            $table->decimal('service_price', 8, 2);
+            $table->integer('quantity')->default(1);
+            $table->text('technician_notes')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('completion_time')->nullable();
+            $table->timestamps();
+            
+            $table->foreign('job_id')->references('job_id')->on('jobs')->onDelete('cascade');
+            $table->foreign('service_id')->references('service_id')->on('services')->onDelete('restrict');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('jobs_services');
+    }
+};
