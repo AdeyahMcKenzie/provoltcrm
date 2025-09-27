@@ -18,9 +18,9 @@ class User extends Authenticatable
      * @var list<string>
      */
     // Use employee_id as primary key instead of id
-    protected $primaryKey = 'employee_id';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    //protected $primaryKey = 'employee_id';
+    //public $incrementing = false;
+    //protected $keyType = 'string';
 
      
     protected $fillable = [

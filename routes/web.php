@@ -1,33 +1,34 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use Illuminate\Support\Facades\Auth;
-
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Authentication routes are defined in routes/auth.php (Breeze/Fortify). Remove test routes.
+// Remove the 'web' middleware - it's automatic now
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
 
-Route::middleware(['web'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-});
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware('guest');
 
-
-
-Route::get('/debug-auth', function () {
-    dd(Auth::check(), Auth::user(), session()->all());
-});
-
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/test-auth', function () {
+    return [
+        'authenticated' => Auth::check(),
+        'user' => Auth::user(),
+        'session_id' => session()->getId(),
+        'csrf_token' => csrf_token(),
+    ];
+})->middleware('auth');
 
 require __DIR__.'/auth.php';

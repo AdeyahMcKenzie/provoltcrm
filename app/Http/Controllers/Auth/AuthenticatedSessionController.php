@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         // Force a test value in the session
-        //$request->session()->put('test', 'works');
+        $request->session()->put('test', 'works');
 
        // dd(Auth::check(), Auth::user());
 

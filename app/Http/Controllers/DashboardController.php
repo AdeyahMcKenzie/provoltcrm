@@ -9,7 +9,19 @@ class DashboardController extends Controller
 {
     public function index()
     {
-       // dd(request()->getHost(), request()->url(), request()->cookie('laravel_session'), Auth::user());
-        return view('dashboard'); 
+        // Debug info
+        \Log::info('Dashboard accessed', [
+            'user' => Auth::user(),
+            'session_id' => session()->getId(),
+            'auth_check' => Auth::check()
+        ]);
+
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user();
+        
+        return view('dashboard', compact('user'));
     }
 }
