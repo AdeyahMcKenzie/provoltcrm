@@ -101,6 +101,24 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: provoltcrm-phpmyadmin
+        restart: unless-stopped
+        ports:
+            - '8081:80'
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_USER: '${DB_USERNAME}'
+            PMA_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+        depends_on:
+            - mysql
+        networks:
+            - sail
+
+
 networks:
     sail:
         driver: bridge

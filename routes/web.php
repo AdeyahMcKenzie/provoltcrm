@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Remove the 'web' middleware - it's automatic now
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth')
     ->name('dashboard');
@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//test auth is working
 Route::get('/test-auth', function () {
     return [
         'authenticated' => Auth::check(),
