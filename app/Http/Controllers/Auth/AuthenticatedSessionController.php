@@ -28,8 +28,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        //return redirect()->intended(route('dashboard', absolute: false));
+        // Force a test value in the session
+        //$request->session()->put('test', 'works');
+
+       // dd(Auth::check(), Auth::user());
+
         return redirect()->intended(route('dashboard', absolute: false));
+        
     }
 
     /**

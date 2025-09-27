@@ -19,6 +19,7 @@ return [
     */
 
     'driver' => env('SESSION_DRIVER', 'database'),
+    'database' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
