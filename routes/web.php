@@ -9,18 +9,30 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+//Route::get('/dashboard', [DashboardController::class, 'index'])
+   // ->middleware('auth')
+    //->name('dashboard');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+    // Profile routes (from Breeze)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');        
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    });
+
+// Controller routes
+Route::resource('customers', CustomerController::class);
+Route::resource('users', UserController::class);
+Route::resource('vehicles', VehicleController::class);
+Route::resource('jobs', JobController::class);
+Route::resource('services', ServiceController::class);
+Route::resource('payments', PaymentController::class);
+Route::resource('quotes', QuoteController::class);
 
 //test auth is working
 Route::get('/test-auth', function () {
