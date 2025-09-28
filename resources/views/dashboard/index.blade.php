@@ -3,13 +3,15 @@
 
 @section('title', 'Dashboard - ProVoltCRM')
 @section('page-title', 'Dashboard')
-@section('page-description', 'Welcome back! Here\'s what\'s happening at your shop.')
+@section('page-description', 'Welcome back ' . Auth::user()->first_name .'! Here\'s what\'s happening at your shop.')
+
 
 @section('content')
+    
     <!-- Top Stats Row -->
     <div class="grid grid-cols-4 gap-6 mb-8">
         <!-- Revenue Card -->
-        <div class="bg-white rounded-2xl p-6 card-shadow card-hover">
+        <div class="bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl p-6 card-shadow card-hover">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-medium text-gray-600">Total Revenue</h3>
                 <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
@@ -22,11 +24,143 @@
                 <span class="text-gray-500 ml-1">vs last month</span>
             </div>
         </div>
-        
-        <!-- Add your other cards here... -->
+        <!-- Customer Card -->
+        <div class="bg-gradient-to-br from-lime-300 to-green-600 rounded-2xl p-6 card-shadow card-hover">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-gray-600">Total Customers</h3>
+                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600"></i>
+                </div>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-1">{{ number_format($stats['active_customers']) }}</div>
+            <div class="flex items-center text-sm">
+                <span class="text-green-500 font-medium">+12%</span>
+                <span class="text-gray-500 ml-1">vs last month</span>
+            </div>
+        </div>
+        <!-- Active Jobs Card -->
+        <div class="bg-gradient-to-br from-indigo-400 to-purple-600 rounded-2xl p-6 card-shadow card-hover">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-medium text-gray-600">Active Jobs</h3>
+                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600"></i>
+                </div>
+            </div>
+            <div class="text-3xl font-bold text-gray-800 mb-1">{{ number_format($stats['active_jobs']) }}</div>
+            <div class="flex items-center text-sm">
+                <span class="text-green-500 font-medium">+12%</span>
+                <span class="text-gray-500 ml-1">vs last month</span>
+            </div>
+        </div>
+           <!-- Completion Rate Card -->
+        <div class="bg-gradient-to-br from-yellow-300 to-orange-600 rounded-2xl p-6 card-shadow card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-medium text-white">Completion Rate</h3>
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600"></i>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-800 mb-1">{{ number_format($stats['completion_rate']) }}</div>
+                <div class="flex items-center text-sm">
+                    <span class="text-green-500 font-medium">+12%</span>
+                    <span class="text-gray-500 ml-1">vs last month</span>
+                </div>
+        </div>
     </div>
-    
-    <!-- Add the rest of your dashboard content here... -->
+
+    <!-- Middle Section-->
+    <div class="grid grid-cols-10 gap-6 mb-8">
+        <!-- Customers Card-->
+        <div class="col-span-3 ">
+            <div class="bg-white rounded-2xl p-6 card-shadow card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-600">Quick Actions</h3>
+                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl text-gray-800 mb-1">
+                     <ul>
+                        <li class="flex items-center space-x-2 border-b py-4">
+                            <!-- Icon -->
+                            <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
+                            <!-- Text -->
+                            <span>Add Customer</span>
+                        </li>
+                     </ul>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        
+                    </div>
+            </div>
+        </div>
+        <div class="col-span-7  ">
+            <div class="bg-white rounded-2xl p-6 card-shadow card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-medium text-gray-600">Recent Jobs</h3>
+                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600"></i>
+                        </div>
+                    </div>
+                    <div class="text-base font-bold text-gray-800 mb-1">
+                        <table class="min-w-full ">
+                            <thead class="bg-sky-950 text-white ">
+                                <tr>
+                                    <th class="px-4 py-2 rounded-tl-lg rounded-bl-lg">Registration #</th>
+                                    <th class="px-4 py-2 ">Make</th>
+                                    <th class="px-4 py-2 ">Model</th>
+                                    <th class="px-4 py-2 ">Technician</th>
+                                    <th class="px-4 py-2 rounded-tr-lg rounded-br-lg">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                @foreach($recent_jobs as $job)
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-2 border-b">{{ $job->registration_number }}</td>
+                                        <td class="px-4 py-2 border-b">{{ $job->vehicle->make }}</td>
+                                        <td class="px-4 py-2 border-b">{{ $job->vehicle->model }}</td>
+                                        <td class="px-4 py-2 border-b">
+                                            {{ $job->technicianUser ? $job->technicianUser->first_name : 'Unassigned' }}
+                                        </td>
+                                        <!-- Set background colour based on status-->
+                                        @switch($job->status)
+                                            @case('scheduled')
+                                                <td class="px-4 py-2 border-b"> 
+                                                    <span class="bg-blue-600 text-white rounded-md font-semibold px-3 py-1">scheduled</span>
+                                                </td>
+                                            @break
+                                            @case('in_progress')
+                                                <td class="px-4 py-2 border-b"> 
+                                                    <span class="bg-amber-500 text-white rounded-md font-semibold px-3 py-1">in progress</span>
+                                                </td>
+                                            @break
+                                            @case('completed')
+                                                <td class="px-4 py-2 border-b"> 
+                                                    <span class="bg-lime-500 text-white rounded-md font-semibold px-3 py-1">completed</span>
+                                                </td>
+                                            @break
+                                            @case('cancelled')
+                                                <td class="px-4 py-2 border-b"> 
+                                                    <span class="bg-red-600 text-white rounded-md font-semibold px-3 py-1">cancelled</span>
+                                                </td>
+                                            @break
+                                            @default
+                                                <td class="px-4 py-2 border-b"> 
+                                                    <span class="bg-gray-400 text-white rounded-md font-semibold px-3 py-1">unknwon</span>
+                                                </td>
+                                        @endswitch
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex items-center text-sm">
+                        <span class="text-gray-400 font-medium">Showing 1 to 20 of 20 entires</span>
+                        <span class="text-gray-500 ml-1"></span>
+                    </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

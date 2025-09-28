@@ -9,9 +9,6 @@ Route::get('/', function () {
 });
 
 
-//Route::get('/dashboard', [DashboardController::class, 'index'])
-   // ->middleware('auth')
-    //->name('dashboard');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
