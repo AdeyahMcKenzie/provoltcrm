@@ -7,9 +7,7 @@
     <title>@yield('title', 'ProVoltCRM')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lucide/dist/lucide.min.js"></script>
-    <script>lucide.replace()</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -48,7 +46,7 @@
         <!-- Sidebar -->
         <div class="w-64 bg-white border-r border-gray-200 fixed h-full overflow-y-auto">
             <!-- Logo -->
-            <div class="p-6 border-b border-gray-200">
+            <div class="p-6  border-gray-200">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
                         <i data-lucide="zap" class="w-6 h-6 text-white"></i>
@@ -116,6 +114,7 @@
                             <i data-lucide="calendar" class="w-4 h-4"></i>
                             <span>{{ now()->format('M d, Y') }}</span>
                         </div>
+                        <!--User Account Bubble -->
                         <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-medium">
                             {{ substr(Auth::user()->first_name, 0, 1) }}{{ substr(Auth::user()->surname, 0, 1) }}
                         </div>
@@ -131,9 +130,7 @@
     </div>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-        
+          
         // Add hover effects
         document.querySelectorAll('.card-hover').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -143,6 +140,11 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0)';
             });
+        });
+
+        // Initialize Lucide icons
+        document.addEventListener('DOMContentLoaded', function () {
+            lucide.createIcons();
         });
         
         // Additional scripts
