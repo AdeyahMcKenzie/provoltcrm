@@ -20,8 +20,8 @@ class JobFactory extends Factory
     public function definition(): array
     {
         return [
-            'registration_number' => Vehicle::inRandomOrder()->first()?->registration_number,
-            'customer_id' => Customer::inRandomOrder()->first()?->customer_id,
+            'registration_number' => null , //value is set in the model
+            'customer_id' => null , //value is set in the model
             'technician' => User::inRandomOrder()->first()?->employee_id,
             'date' => $this->faker->date(),
             'visit_number' => $this->faker->numberBetween(1, 5),

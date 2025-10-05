@@ -9,7 +9,7 @@
 @section('content')
     
     <!-- Top Stats Row -->
-    <div class="grid grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Revenue Card -->
         <div class="bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl p-6 card-shadow card-hover">
             <div class="flex items-center justify-between mb-4">
@@ -67,58 +67,55 @@
         </div>
     </div>
 
-    <!-- Middle Section-->
-    <div class="grid grid-cols-10 gap-6 mb-8">
-        <!-- Quick Actions Card-->
-        <div class="col-span-3 ">
-            <div class="bg-white rounded-2xl p-6 card-shadow card-hover">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-medium text-gray-600">Quick Actions</h3>
-                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                            <i data-lucide="zap" class="w-4 h-4 text-green-600"></i>
-                        </div>
+    <!-- Reainder of Dashboard-->
+    <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 mb-8">
+        <!-- Left Section-->
+        <div class="col-span-1 lg:col-span-3 flex flex-col gap-6 w-full">
+            <!-- Top Card -->
+            <div class="bg-white rounded-2xl p-6 card-shadow card-hover min-w-full ">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium text-gray-600">Quick Actions</h3>
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i data-lucide="zap" class="w-4 h-4 text-green-600"></i>
                     </div>
-                    <div class="text-2xl text-gray-800 mb-1">
-                        <!-- List of actions-->
-                        <ul>
-                            <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
-                                <!-- Customer Icon -->
-                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <i data-lucide="users" class="w-5 h-5  text-white "></i>
-                                 </div>
-                                <!-- Text -->
-                                <span>Add A Customer</span>
-                            </li>
-                            <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
-                                <!-- Service Icon -->
-                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <i data-lucide="cable" class="w-5 h-5  text-white "></i>
-                                 </div>
-                                <!-- Text -->
-                                <span>Add A Service</span>
-                            </li>
-                            <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
-                                <!-- File Icon -->
-                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <i data-lucide="file-plus-2" class="w-5 h-5  text-white "></i>
-                                 </div>
-                                <!-- Text -->
-                                <span>Create A New Job</span>
-                            </li>
-                            <li class="flex items-center space-x-2  py-4 text-2xl text-gray-800 mb-1">
-                                <!-- File Icon -->
-                                 <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <i data-lucide="receipt-text" class="w-5 h-5  text-white "></i>
-                                 </div>
-                                <!-- Text -->
-                                <span>Create A Quote</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="flex items-center text-sm">   
-                    </div>
+                </div>
+                <div class="text-2xl text-gray-800 mb-1">
+                    <ul>
+                        <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i data-lucide="users" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <span>Add A Customer</span>
+                        </li>
+                        <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i data-lucide="cable" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <span>Add A Service</span>
+                        </li>
+                        <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i data-lucide="file-plus-2" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <span>Create A New Job</span>
+                        </li>
+                        <li class="flex items-center space-x-2 py-4 text-2xl text-gray-800 mb-1">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i data-lucide="receipt-text" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <span>Create A Quote</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Card  -->
+            <div class="bg-white rounded-2xl p-6 card-shadow card-hover min-w-ful">
+                <h3 class="text-lg font-medium text-gray-600 mb-4">Another Card</h3>
+                <p class="text-gray-700">This is the second stacked card under Quick Actions.</p>
             </div>
         </div>
+        <!-- Right Card -->
         <div class="col-span-7  ">
             <div class="bg-white rounded-2xl p-6 card-shadow card-hover">
                     <div class="flex items-center justify-between mb-4">
@@ -127,7 +124,8 @@
                             <i data-lucide="layers" class="w-4 h-4 text-white"></i>
                         </div>
                     </div>
-                    <div class="text-base font-bold text-gray-800 mb-1">
+                    <!-- RECENT JOBS TABLE -->
+                    <div class="text-base font-bold text-gray-800 mb-1 overflow-x-auto">
                         <table class="min-w-full ">
                             <thead class="bg-sky-950 text-white ">
                                 <tr>

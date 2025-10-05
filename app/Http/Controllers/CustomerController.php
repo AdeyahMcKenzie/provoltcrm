@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Customer;
 
 class CustomerController extends Controller
 {
@@ -11,7 +12,15 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        //Get customers from database, 15 at a time
+        $customers = Customer::where('is_active', true)  // Only get active customers
+                            ->orderBy('customer_id', 'ASC')  
+                            ->paginate(15);  // Show 15 per page
+        
+        // render the view with customer data 
+        return view('customers.index', [
+            'customers' => $customers //pass directly as the variable $customer
+        ]);
     }
 
     /**
@@ -35,7 +44,19 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //get customer records along with vehicle and job records.
+        $customer = Customer::with('vehicles')->findOrFail($id);
+            
+        //load in order of most recent with pagination 
+        $jobs = $customer -> jobs()
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
+
+        return view('customers.show', compact(
+            'customer',
+            'jobs'
+        ));
     }
 
     /**

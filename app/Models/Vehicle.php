@@ -9,7 +9,9 @@ class Vehicle extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'vehicle_registration';
+    protected $primaryKey = 'registration_number';
+    public $incrementing = false; // Since it's not an auto-incrementing ID
+    protected $keyType = 'string';
 
     protected $fillable = [
         'registration_number',
@@ -42,5 +44,11 @@ class Vehicle extends Model
     public function owner()
     {
         return $this->belongsTo(Customer::class, 'owner_id', 'customer_id');
+    }
+
+    // relationship to jobs
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'registration_number', 'vehicle_registration');
     }
 }

@@ -41,4 +41,9 @@ class Customer extends Model
     {
         return $this->hasMany(Vehicle::class, 'owner_id', 'customer_id');
     }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class, 'customer_id', 'customer_id');
+    }
 }

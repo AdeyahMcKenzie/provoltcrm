@@ -37,7 +37,7 @@ class VehicleFactory extends Factory
 
         return [
             'registration_number' => $this->faker->regexify('[A-Z]{1,2}[0-9]{1,4}'),//randomly generate vehicle registration numbers
-            'owner_id' => Customer::inRandomOrder()->first()?->customer_id,//link the car to its owner
+            'owner_id' => null, //value is set in the model
             'make' => $vehicle['make'],
             'model' => $vehicle['model'],
             'description' => $this->faker->randomElement([

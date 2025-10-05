@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Vehicle;
+use App\Models\Customer;
 
 class VehicleController extends Controller
 {
@@ -11,7 +13,15 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+         //Get vehicles from database, 15 at a time
+         $vehicles = Vehicle::with('owner')  //all with owner function from model
+         ->orderBy('owner_id', 'ASC')  
+         ->paginate(15);  // Show 15 per page
+
+        // render the view with customer data 
+        return view('vehicles.index', [
+            'vehicles' => $vehicles //pass directly as the variable $customer
+        ]);
     }
 
     /**

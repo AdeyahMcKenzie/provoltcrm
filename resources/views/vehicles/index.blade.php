@@ -8,21 +8,21 @@
 @section('content')
     <div class="bg-white rounded-2xl p-6 card-shadow">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="text-lg font-semibold text-gray-800">All Customers</h3>
+            <h3 class="text-lg font-semibold text-gray-800">All Vehicles</h3>
             <button class="bg-sky-950  text-white px-4 py-2 rounded-lg font-medium">
-                Add Customer
+                Add A Vehicle
             </button>
         </div>
         <!-- List customers -->
         <div class="text-base font-bold text-gray-800 mb-1 overflow-x-auto">
             <!-- Messaging for no customers-->
-            @if($customers->count() == 0)
+            @if($vehicles->count() == 0)
                 <div class="text-center py-12">
                     <i data-lucide="users" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
-                    <p class="text-gray-500 text-lg">No customers yet</p>
-                    <p class="text-gray-400 text-sm mb-4">Start by adding your first customer!</p>
+                    <p class="text-gray-500 text-lg">No vehicles yet</p>
+                    <p class="text-gray-400 text-sm mb-4">Start by adding your first vehicle!</p>
                     <a href="{{ route('customers.create') }}" class="text-purple-600 hover:text-purple-700 font-medium">
-                        Add Your First Customer →
+                        Add Your First Vehicle →
                     </a>
                 </div>
             @else
@@ -30,39 +30,39 @@
                     <!-- Table Headers -->
                     <thead class="bg-gradient-to-br from-lime-300 to-green-600 text-white">
                         <tr>
-                            <th class="px-4 py-2 rounded-tl-lg rounded-bl-lg">ID</th>
-                            <th class="px-4 py-2 ">Name</th>
-                            <th class="px-4 py-2">Contact #</th>
-                            <th class="px-4 py-2">Email</th>
-                            <th class="px-4 py-2">Address</th>
+                            <th class="px-4 py-2 rounded-tl-lg rounded-bl-lg">Registration Number</th>
+                            <th class="px-4 py-2">Make</th>
+                            <th class="px-4 py-2">Model</th>
+                            <th class="px-4 py-2">Year</th>
+                            <th class="px-4 py-2 ">Owner</th>
                             <th class="px-4 py-2 rounded-tr-lg rounded-br-lg text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="text-left">
-                        @foreach($customers as $customer)
+                        @foreach($vehicles as $vehicle)
                         <!-- Table rows go here -->
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-2 border-b">{{$customer->customer_id}}</td>
-                            <td class="px-4 py-2 border-b">{{$customer->first_name}} {{$customer->surname}}</td>
-                            <td class="px-4 py-2 border-b">{{$customer->contact_number}}</td>
-                            <td class="px-4 py-2 border-b">{{$customer->email_address}}</td>
-                            <td class="px-4 py-2 border-b">{{$customer->street_address}}, {{$customer->province}}, {{$customer->parish}}</td>
+                            <td class="px-4 py-2 border-b">{{$vehicle->registration_number}}</td>
+                            <td class="px-4 py-2 border-b">{{$vehicle->make}}</td>
+                            <td class="px-4 py-2 border-b">{{$vehicle->model}}</td>
+                            <td class="px-4 py-2 border-b">{{$vehicle->year}}</td>
+                            <td class="px-4 py-2 border-b">{{$vehicle->owner->first_name}} {{$vehicle->owner->surname}}</td>
                             <!-- Action Buttons -->
                             <td class="px-4 py-2 border-b">
                                 <div class="flex items-center space-x-2">
                                     <!-- View Button -->
-                                    <a href="{{ route('customers.show', $customer->customer_id) }}" 
+                                    <a href="{{ route('vehicles.show', $vehicle->registration_number) }}" 
                                        class="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors"
                                        title="View Details">
                                         <i data-lucide="eye" class="w-4 h-4 text-white"></i>
                                     </a>
                                     <!-- Edit Button-->
-                                    <button class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                    <button class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center" title="Edit Details">
                                         <i data-lucide="edit" class="w-4 h-4 text-white"></i>
                                     </button>
                                     <!-- Verify user role for delete button-->
                                     @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
-                                        <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center">
+                                        <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center" title="Delete">
                                             <i data-lucide="trash" class="w-4 h-4 text-white"></i>
                                         </button>
                                     @endif
@@ -74,7 +74,7 @@
                 </table>
                 <!-- Pagination Links -->
                  <div class="mt-6">
-                     {{ $customers->links() }}
+                     {{ $vehicles->links() }}
                  </div>
             
                 
