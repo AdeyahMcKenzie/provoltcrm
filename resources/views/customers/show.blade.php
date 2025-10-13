@@ -1,4 +1,4 @@
-{{-- resources/views/customers/index.blade.php --}}
+{{-- resources/views/customers/show.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Customers - ProVoltCRM')

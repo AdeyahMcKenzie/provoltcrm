@@ -9,9 +9,10 @@
     <div class="bg-white rounded-2xl p-6 card-shadow">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold text-gray-800">All Customers</h3>
-            <button class="bg-sky-950  text-white px-4 py-2 rounded-lg font-medium">
-                Add Customer
-            </button>
+            <a href="{{ route('customers.create') }}" class="flex items-center space-x-2 bg-sky-950 text-white px-4 py-2 rounded-lg font-medium hover:bg-sky-900 transition-colors">
+                <i data-lucide="user-plus" class="w-5 h-5"></i>
+                <span>Create Customer</span>
+            </a>
         </div>
         <!-- List customers -->
         <div class="text-base font-bold text-gray-800 mb-1 overflow-x-auto">

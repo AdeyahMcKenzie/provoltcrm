@@ -1,9 +1,9 @@
-{{-- resources/views/customers/index.blade.php --}}
+{{-- resources/views/vehicles/index.blade.php --}}
 @extends('layouts.app')
 
-@section('title', 'Customers - ProVoltCRM')
-@section('page-title', 'Customers')
-@section('page-description', 'Manage your customer records.')
+@section('title', 'Vehicles - ProVoltCRM')
+@section('page-title', 'Vehicles')
+@section('page-description', 'Manage your vehicle records.')
 
 @section('content')
     <div class="bg-white rounded-2xl p-6 card-shadow">
@@ -13,15 +13,15 @@
                 Add A Vehicle
             </button>
         </div>
-        <!-- List customers -->
+        <!-- List vehicles -->
         <div class="text-base font-bold text-gray-800 mb-1 overflow-x-auto">
-            <!-- Messaging for no customers-->
+            <!-- Messaging for no vehicles-->
             @if($vehicles->count() == 0)
                 <div class="text-center py-12">
                     <i data-lucide="users" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
                     <p class="text-gray-500 text-lg">No vehicles yet</p>
                     <p class="text-gray-400 text-sm mb-4">Start by adding your first vehicle!</p>
-                    <a href="{{ route('customers.create') }}" class="text-purple-600 hover:text-purple-700 font-medium">
+                    <a href="{{ route('vehicles.create') }}" class="text-purple-600 hover:text-purple-700 font-medium">
                         Add Your First Vehicle →
                     </a>
                 </div>

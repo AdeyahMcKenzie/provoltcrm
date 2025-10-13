@@ -71,7 +71,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-10 gap-6 mb-8">
         <!-- Left Section-->
         <div class="col-span-1 lg:col-span-3 flex flex-col gap-6 w-full">
-            <!-- Top Card -->
+            <!-- Top Card; Quick Actions -->
             <div class="bg-white rounded-2xl p-6 card-shadow card-hover min-w-full ">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-medium text-gray-600">Quick Actions</h3>
@@ -81,12 +81,16 @@
                 </div>
                 <div class="text-2xl text-gray-800 mb-1">
                     <ul>
-                        <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
-                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                <i data-lucide="users" class="w-5 h-5 text-white"></i>
-                            </div>
-                            <span>Add A Customer</span>
-                        </li>
+                        <!-- Add A Customer -->
+                        <a href="{{ route('customers.create') }}">
+                            <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
+                            
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <i data-lucide="users" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <span>Create a Customer</span>
+                            </li>
+                        </a>
                         <li class="flex items-center space-x-2 border-b py-4 text-2xl text-gray-800 mb-1">
                             <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
                                 <i data-lucide="cable" class="w-5 h-5 text-white"></i>
