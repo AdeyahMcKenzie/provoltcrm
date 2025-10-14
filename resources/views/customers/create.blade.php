@@ -28,14 +28,14 @@
                                     <label for="firstname" class="block text-sm font-medium text-gray-700 mb-2">
                                         Firstname
                                     </label>
-                                            <input type="text" name="firstname" id="firstname"        placeholder="Enter customer firstname" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                            <input type="text" name="first_name" id="first_name"        placeholder="Enter customer firstname" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                 <!--Surname-->
                                 <div>
                                     <label for="surname" class="block text-sm font-medium text-gray-700 mb-2">
                                         Surname
                                     </label>
-                                            <input type="text" name="surname" id="surname"        placeholder="Enter customer surname" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                            <input type="text" name="surname" id="surname"        placeholder="Enter customer surname" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                 <!-- Notes -->
                                 <div>
@@ -53,7 +53,7 @@
                                     <label for="street" class="block text-sm font-medium text-gray-700 mb-2">
                                         Street Address
                                     </label>
-                                    <input type="text" name="street" id="street"        placeholder="Enter a street address" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                    <input type="text" name="street_address" id="street_address"        placeholder="Enter a street address" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                                 <!-- Province-->
                                 <div>
@@ -65,10 +65,10 @@
                                 <!-- Parish-->
                                 <div>
                                     <label for="parish" class="block text-sm font-medium text-gray-700 mb-2">
-                                        Province
+                                        Parish
                                     </label>
-                                    <select name="parish" id="parish"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
-                                        <option value="null"> Choose a parish </option>
+                                    <select name="parish" id="parish"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" >
+                                        <option value="null"> Choose a parish</option>
                                         <option value="St.Lucy"> St. Lucy </option>
                                         <option value="St.Peter"> St. Peter </option>
                                         <option value="St.Andrew"> St. Andrew </option>
@@ -91,11 +91,11 @@
                                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                                         Email Address
                                     </label>
-                                            <input type="text" name="email" id="email"        placeholder="Enter customer email" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                            <input type="text" name="email_address" id="email_address"        placeholder="Enter customer email" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                                  <!--Contact No-->
                                 <div>
-                                    <label for="cnumber" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="contact_number" class="block text-sm font-medium text-gray-700 mb-2">
                                         Contact Number 
                                     </label>
                                     <div class="flex w-full rounded-lg border border-gray-300 shadow-sm focus-within:ring-2 focus-within:ring-purple-500 overflow-hidden">
@@ -103,12 +103,12 @@
                                         🇧🇧 +1 246
                                         </span>
                                     
-                                            <input type="text" name="cnumber" id="cnumber"        placeholder="Enter customer number" class="w-full px-4 py-2 rounded-r-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                            <input type="text" name="contact_number" id="contact_number"        placeholder="Enter customer number" class="w-full px-4 py-2 rounded-r-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                     </div>
                                 </div>
                                 <!--Alternative Contact-->
                                 <div>
-                                    <label for="cnumber2" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="alternative_contact" class="block text-sm font-medium text-gray-700 mb-2">
                                         Alternative Contact Number 
                                     </label>
                                     <div class="flex w-full rounded-lg border border-gray-300 shadow-sm focus-within:ring-2 focus-within:ring-purple-500 overflow-hidden">
@@ -116,17 +116,17 @@
                                         🇧🇧 +1 246
                                         </span>
                                     
-                                            <input type="text" name="cnumber2" id="cnumber2"        placeholder="Enter customer number" class="w-full px-4 py-2 rounded-r-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                            <input type="text" name="alternative_contact" id="alternative_contact"        placeholder="Enter customer number" class="w-full px-4 py-2 rounded-r-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                     </div>
                                 </div>
                                 <!-- Preferred Contact Method-->
                                 <div>
-                                    <label for="preferred" class="block text-sm font-medium text-gray-700 mb-2">
+                                    <label for="preferred_contact_method" class="block text-sm font-medium text-gray-700 mb-2">
                                         Preferred Contact Method 
                                     </label>
                                     <div class="flex justify-start">
-                                    <input type="radio" name="preferred" id="pref-email" value="email" class="size-5 rounded-lg checked:bg-indigo-600 border border-gray-100 mx-5  "> Email
-                                    <input type="radio" name="preferred" id="pref-phone" value="phone" class="size-5 rounded-lg checked:bg-indigo-600 border border-gray-100 mx-5  "> Phone
+                                    <input type="radio" name="preferred_contact_method" id="pref-email" value="email" class="size-5 rounded-lg checked:bg-indigo-600 border border-gray-100 mx-5  " checked="checked" required> Email
+                                    <input type="radio" name="preferred_contact_method" id="pref-phone" value="phone" class="size-5 rounded-lg checked:bg-indigo-600 border border-gray-100 mx-5  "> Phone
                                     </div>
                                 </div>
                                 

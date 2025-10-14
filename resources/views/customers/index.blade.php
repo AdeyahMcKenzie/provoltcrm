@@ -52,19 +52,29 @@
                             <td class="px-4 py-2 border-b">
                                 <div class="flex items-center space-x-2">
                                     <!-- View Button -->
-                                    <a href="{{ route('customers.show', $customer->customer_id) }}" 
-                                       class="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors"
-                                       title="View Details">
-                                        <i data-lucide="eye" class="w-4 h-4 text-white"></i>
-                                    </a>
+                                    <div class="relative group">
+                                        <a href="{{ route('customers.show', $customer->customer_id) }}" 
+                                           class="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center     transition-colors"
+                                           title="View Details">
+                                            <i data-lucide="eye" class="w-4 h-4 text-white"></i>
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    View Customer
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <!-- Edit Button-->
                                     <button class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
                                         <i data-lucide="edit" class="w-4 h-4 text-white"></i>
                                     </button>
-                                    <!-- Verify user role for delete button-->
+                                    <!-- Verify user role for archive button-->
                                     @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
                                         <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center">
-                                            <i data-lucide="trash" class="w-4 h-4 text-white"></i>
+                                            <i data-lucide="archive" class="w-4 h-4 text-white"></i>
                                         </button>
                                     @endif
                                 </div>

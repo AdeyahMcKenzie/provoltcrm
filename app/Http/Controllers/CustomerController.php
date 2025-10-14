@@ -36,7 +36,29 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           //Validate input
+        $validated = $request->validate([
+            'first_name'   => 'required|string|max:255',
+            'surname'     => 'required|string|max:255',
+            'notes'       => 'nullable|string|max:2000',
+            'street_address'      => 'nullable|string|max:255',
+            'province'    => 'nullable|string|max:255',
+            'parish'      => 'nullable|string',
+            'email_address'       => 'nullable|email|max:255',
+            'contact_number'     => 'required|string|max:20',
+            'alternative_contact'    => 'nullable|string|max:20',
+            'preferred_contact_method'   => 'nullable|in:email,phone',
+        ]);
+
+        $validated['is_active'] = true;
+        $validated['created_by'] = auth()->user()->employee_id;
+
+        //Create customer record
+        $customer = Customer::create($validated);
+
+        //redirect to the "show" route
+        return redirect()->route('customers.show', $customer)
+                         ->with('success', 'Customer created successfully!');
     }
 
     /**
