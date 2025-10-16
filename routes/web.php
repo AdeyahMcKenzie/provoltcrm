@@ -39,6 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('quotes', QuoteController::class);
 });
 
+Route::patch('/customers/{id}/archive', [CustomerController::class, 'archive'])
+    ->name('customers.archive');
+//custom archive route.
+
+
 //test auth is working
 Route::get('/test-auth', function () {
     return [

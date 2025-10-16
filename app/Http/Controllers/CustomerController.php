@@ -86,7 +86,12 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //get customer records along with vehicle and job records.
+        $customer = Customer::findOrFail($id);
+            
+        return view('customers.edit', compact(
+            'customer'
+        ));
     }
 
     /**
@@ -101,6 +106,14 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    {
+        //
+    }
+
+    /**
+     * Set the customer as not active to archive the records.
+     */
+    public function archive(string $id)
     {
         //
     }
