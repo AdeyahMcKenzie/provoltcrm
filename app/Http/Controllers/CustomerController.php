@@ -86,7 +86,14 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //Get customer record
+        $customer = Customer::findOrFail($id);
+            
+
+        //return the edit view 
+        return view('customers.edit', compact(
+            'customer'
+        ));
     }
 
     /**
@@ -94,7 +101,29 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //Get customer record
+        $customer = Customer::findOrFail($id);
+
+        $validated = $request->validate([
+            'first_name'   => 'required|string|max:255',
+            'surname'     => 'required|string|max:255',
+            'notes'       => 'nullable|string|max:2000',
+            'street_address'      => 'nullable|string|max:255',
+            'province'    => 'nullable|string|max:255',
+            'parish'      => 'nullable|string',
+            'email_address'       => 'nullable|email|max:255',
+            'contact_number'     => 'required|string|max:20',
+            'alternative_contact'    => 'nullable|string|max:20',
+            'preferred_contact_method'   => 'required|in:email,phone',
+            'is_active' => 'required|boolean',
+        ]);
+
+        // Mass update
+        $customer->update($validated);
+
+        //redirect to the "show" route
+        return redirect()->route('customers.show', $customer)
+                         ->with('success', 'Customer created successfully!');
     }
 
     /**
@@ -103,5 +132,24 @@ class CustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    /**
+     *  Archive  customer records
+     */
+    public function archive(string $id)
+    {
+        //Get customer record
+        $customer = Customer::findOrFail($id);
+
+        //Change customer status
+        $customer->is_active = false;
+    
+        //Update the database
+        $customer->save();
+    
+        //Redirect to index
+        return redirect()->route('customers.index')
+                    ->with('success', 'Customer archived successfully!');
+
     }
 }

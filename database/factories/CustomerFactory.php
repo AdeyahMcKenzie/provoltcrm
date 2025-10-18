@@ -18,7 +18,7 @@ class CustomerFactory extends Factory
             'email_address' => $this->faker->unique()->safeEmail(),
             'street_address' => $this->faker->streetAddress(),
             'province'=> $this->faker->randomElement(['Fitts Village', 'Bridgetown', 'The Ivy', 'Holders Hill', 'Parish Land', 'The Glebe']),
-            'parish' => $this->faker->randomElement(['St.Andrew', 'St.Peter', 'St. Michael', 'Christ Church', 'St. James', 'St. Phillip']),
+            'parish' => $this->faker->randomElement(['St.Andrew', 'St.Peter', 'St.Michael', 'Christ Church', 'St.James', 'St.Phillip']),
             'alternative_contact' => '246-' . $this->faker->numerify('###-####'),
             'preferred_contact_method' => $this->faker->randomElement(['phone', 'email', 'sms']),
             'notes' => $this->faker->optional(0.3)->sentence(), // 30% chance of having notes
