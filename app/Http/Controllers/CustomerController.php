@@ -66,7 +66,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //get customer records along with vehicle and job records.
+        //get customer records along with vehicle records.
         $customer = Customer::with('vehicles')->findOrFail($id);
             
         //load in order of most recent with pagination 
