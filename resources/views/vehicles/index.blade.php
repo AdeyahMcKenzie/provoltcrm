@@ -9,9 +9,10 @@
     <div class="bg-white rounded-2xl p-6 card-shadow">
         <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-semibold text-gray-800">All Vehicles</h3>
-            <button class="bg-sky-950  text-white px-4 py-2 rounded-lg font-medium">
-                Add A Vehicle
-            </button>
+            <a href="{{ route('vehicles.create') }}" class="flex items-center space-x-2 bg-sky-950 text-white px-4 py-2 rounded-lg font-medium hover:bg-sky-900 transition-colors">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                <span>Register Vehicle</span>
+            </a>
         </div>
         <!-- List vehicles -->
         <div class="text-base font-bold text-gray-800 mb-1 overflow-x-auto">
@@ -28,7 +29,7 @@
             @else
                 <table class="min-w-full text-left ">
                     <!-- Table Headers -->
-                    <thead class="bg-gradient-to-br from-lime-300 to-green-600 text-white">
+                    <thead class="bg-gradient-to-br from-cyan-400 to-blue-500 text-white">
                         <tr>
                             <th class="px-4 py-2 rounded-tl-lg rounded-bl-lg">Registration Number</th>
                             <th class="px-4 py-2">Make</th>
@@ -51,20 +52,53 @@
                             <td class="px-4 py-2 border-b">
                                 <div class="flex items-center space-x-2">
                                     <!-- View Button -->
-                                    <a href="{{ route('vehicles.show', $vehicle->registration_number) }}" 
-                                       class="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors"
-                                       title="View Details">
-                                        <i data-lucide="eye" class="w-4 h-4 text-white"></i>
-                                    </a>
+                                    <div class="relative group">
+                                        <a href="{{ route('vehicles.show', $vehicle->registration_number) }}" 
+                                           class="w-8 h-8 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors"
+                                           title="View Details">
+                                            <i data-lucide="eye" class="w-4 h-4 text-white"></i>
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    View Vehicle
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <!-- Edit Button-->
-                                    <button class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center" title="Edit Details">
-                                        <i data-lucide="edit" class="w-4 h-4 text-white"></i>
-                                    </button>
-                                    <!-- Verify user role for delete button-->
+                                    <div class="relative group">
+                                        <a href="{{ route('vehicles.edit', $vehicle->registration_number) }}" 
+                                           class="w-8 h-8 bg-yellow-500 hover:bg-yellow-600 rounded-lg flex items-center justify-center     transition-colors"
+                                           title="Edit Vehicle">
+                                            <i data-lucide="edit" class="w-4 h-4 text-white"></i>
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    Edit Vehicle
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <!-- Verify user role for archive button-->
                                     @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
-                                        <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center" title="Delete">
-                                            <i data-lucide="trash" class="w-4 h-4 text-white"></i>
+                                        <div class="relative group">
+                                          <button type="button" onclick="" class="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors"
+                                           title="Archive Vehicle">
+                                                <i data-lucide="archive" class="w-4 h-4 text-white"></i>
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    Archive Vehicle
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
                                         </button>
+                                    </div>
                                     @endif
                                 </div>
                             </td>
