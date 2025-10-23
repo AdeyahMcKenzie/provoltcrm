@@ -11,8 +11,8 @@
     <div class="col-span-1 md:col-span-6 md:col-start-2 bg-white rounded-2xl p-6 card-shadow drop-shadow-xl card-hover object-center md:mt-20  min-w-full ">
         <div class=" mb-4">
             <h2 class="text-lg font-medium text-left">Update Customer Information</h2>
-            <!-- Create customer form-->           
-            <form action="{{ route('customers.update', $customer->id) }}" method="POST">
+            <!-- Create customer form-->         
+            <form action="{{ route('customers.update', $customer->customer_id) }}" method="POST">
                 @csrf
                 @method ('PATCH')
                 <!-- Align Form Contents -->
@@ -68,18 +68,19 @@
                                     <label for="parish" class="block text-sm font-medium text-gray-700 mb-2">
                                         Parish
                                     </label>
+                                    <!-- Store an array of parishes (Some have spaces in the db and some don't for now will mimic that, db needs to be purged) -->
+                                    @php
+                                        $parishes = ['St.Lucy', 'St.Peter', 'St.Andrew', 'St.John', 'St.Joseph', 'St. James', 'St.George', 'St.Thomas', 'St. Michael', 'St. Phillip', 'Christ Church'];
+                                    @endphp
+                                    <!-- Select input-->
                                     <select name="parish" id="parish"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" >
-                                        <option value="St.Lucy"> St. Lucy </option>
-                                        <option value="St.Peter"> St. Peter </option>
-                                        <option value="St.Andrew"> St. Andrew </option>
-                                        <option value="St.John"> St. John </option>
-                                        <option value="St.Joseph"> St. Joseph </option>
-                                        <option value="St.James"> St. James </option>
-                                        <option value="St.George"> St. George </option>
-                                        <option value="St.Thomas"> St. Thomas </option>
-                                        <option value="St.Michael"> St. Michael </option>
-                                        <option value="St.Phillip"> St. Phillip </option>
-                                        <option value="Christ Church"> Christ Church </option>
+                                    <!-- Set the parish value to match the customer record -->
+                                    @foreach ($parishes as $parish)
+                                        <option value="{{ $parish }}" 
+                                            {{ old('parish', $customer->parish) === $parish ? 'selected' : '' }}>
+                                                {{ $parish }}
+                                        </option>
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>

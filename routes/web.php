@@ -39,7 +39,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('quotes', QuoteController::class);
 });
 
+//custom route for the archive function
+Route::patch('/customers/{id}/archive', [CustomerController::class, 'archive'])
+    ->name('customers.archive');
+
+
 //test auth is working
+/*
 Route::get('/test-auth', function () {
     return [
         'authenticated' => Auth::check(),
@@ -47,6 +53,6 @@ Route::get('/test-auth', function () {
         'session_id' => session()->getId(),
         'csrf_token' => csrf_token(),
     ];
-})->middleware('auth');
+})->middleware('auth');*/
 
 require __DIR__.'/auth.php';

@@ -68,14 +68,56 @@
                                         </a>
                                     </div>
                                     <!-- Edit Button-->
-                                    <button class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
-                                        <i data-lucide="edit" class="w-4 h-4 text-white"></i>
-                                    </button>
+                                    <div class="relative group">
+                                        <a href="{{ route('customers.edit', $customer->customer_id) }}" 
+                                           class="w-8 h-8 bg-yellow-500 hover:bg-yellow-600 rounded-lg flex items-center justify-center     transition-colors"
+                                           title="Edit Customer">
+                                            <i data-lucide="edit" class="w-4 h-4 text-white"></i>
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    Edit Customer
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
+                                        </a>
+                                    </div>
                                     <!-- Verify user role for archive button-->
                                     @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
+<<<<<<< Updated upstream
+                                        <div class="relative group">
+                                        <a href="{{ route('customers.archive', $customer->customer_id) }}" 
+                                           class="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-lg flex items-center justify-center     transition-colors"
+                                           title="Archive Customer">
+                                            <i data-lucide="archive" class="w-4 h-4 text-white"></i>
+=======
+<<<<<<< Updated upstream
                                         <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center">
                                             <i data-lucide="archive" class="w-4 h-4 text-white"></i>
                                         </button>
+=======
+                                        <div class="relative group">
+                                          <button type="button" onclick="archiveCustomer({{ $customer->id }})" class="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors"
+                                           title="Archive Customer">
+                                                <i data-lucide="archive" class="w-4 h-4 text-white"></i>
+>>>>>>> Stashed changes
+                                             <!-- Tooltip bubble -->
+                                            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
+                                                <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
+                                                    Archive Customer
+                                                </div>
+                                                <!-- little arrow (bubble tail) -->
+                                                <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
+                                            </div>
+<<<<<<< Updated upstream
+                                        </a>
+                                    </div>
+=======
+                                        </button>
+                                    </div>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                                     @endif
                                 </div>
                             </td>
@@ -92,4 +134,8 @@
             @endif
         </div>
     </div>
+@endsection
+@section('scripts')
+<!-- Archive Button -->
+ 
 @endsection
