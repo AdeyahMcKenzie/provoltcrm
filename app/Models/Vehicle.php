@@ -49,6 +49,6 @@ class Vehicle extends Model
     // relationship to jobs
     public function jobs()
     {
-        return $this->hasMany(Job::class, 'registration_number', 'vehicle_registration');
+        return $this->hasMany(Job::class, 'registration_number', 'registration_number');
     }
 }

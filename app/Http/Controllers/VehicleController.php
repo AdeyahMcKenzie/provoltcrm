@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Customer;
 
+
 class VehicleController extends Controller
 {
     /**
@@ -18,10 +19,10 @@ class VehicleController extends Controller
          ->orderBy('owner_id', 'ASC')  
          ->paginate(15);  // Show 15 per page
 
-        // render the view with customer data 
-        return view('vehicles.index', [
-            'vehicles' => $vehicles //pass directly as the variable $customer
-        ]);
+        // render the view with vehicle data 
+        return view('vehicles.index', compact(
+            'vehicles'
+        ));
     }
 
     /**
@@ -29,7 +30,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('vehicles.create');
     }
 
     /**
@@ -45,7 +47,25 @@ class VehicleController extends Controller
      */
     public function show(string $id)
     {
-        //
+         // get vehicle record
+         $vehicle = Vehicle::with('owner')->findOrFail($id);
+
+         // Debug: Check what we got
+        logger('Vehicle found: ' . $vehicle->registration_number);
+    
+        
+        // get related jobs
+        $jobs = $vehicle->jobs()
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+        
+
+        // render view
+        return view('vehicles.show', compact(
+            'vehicle',
+            'jobs'
+        ));
     }
 
     /**
