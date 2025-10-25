@@ -37,11 +37,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('services', ServiceController::class);
     Route::resource('payments', PaymentController::class);
     Route::resource('quotes', QuoteController::class);
+    //custom route for the archive function
+    Route::patch('/customers/{id}/archive', [CustomerController::class, 'archive'])
+    ->name('customers.archive');
+    //custom route for Search API - (used on create vehicle page)
+    Route::get('/api/customers/search', [CustomerController::class, 'search'])
+    ->name('customers.search');
 });
 
-//custom route for the archive function
-Route::patch('/customers/{id}/archive', [CustomerController::class, 'archive'])
-    ->name('customers.archive');
+
+
 
 
 //test auth is working

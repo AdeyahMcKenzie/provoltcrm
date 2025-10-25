@@ -38,16 +38,16 @@ class CustomerController extends Controller
     {
            //Validate input
         $validated = $request->validate([
-            'first_name'   => 'required|string|max:255',
-            'surname'     => 'required|string|max:255',
-            'notes'       => 'nullable|string|max:2000',
-            'street_address'      => 'nullable|string|max:255',
-            'province'    => 'nullable|string|max:255',
-            'parish'      => 'nullable|string',
-            'email_address'       => 'nullable|email|max:255',
-            'contact_number'     => 'required|string|max:20',
-            'alternative_contact'    => 'nullable|string|max:20',
-            'preferred_contact_method'   => 'nullable|in:email,phone',
+            'first_name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'notes' => 'nullable|string|max:2000',
+            'street_address' => 'nullable|string|max:255',
+            'province' => 'nullable|string|max:255',
+            'parish' => 'nullable|string',
+            'email_address' => 'nullable|email|max:255',
+            'contact_number' => 'required|string|max:20',
+            'alternative_contact' => 'nullable|string|max:20',
+            'preferred_contact_method' => 'nullable|in:email,phone',
         ]);
 
         $validated['is_active'] = true;
@@ -151,5 +151,33 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')
                     ->with('success', 'Customer archived successfully!');
 
+    }
+
+    /**
+     * API for customer autocomplete text input field
+     */
+    public function search(Request $request)
+    {
+        //retrieve query value from frontend
+        $query = $request->get('query');
+    
+        //don't run the search if input is less than 2 characters
+        if (strlen($query) < 2) {
+            return response()->json([]);
+        }
+    
+        //filter through active customers
+        $customers = Customer::where('is_active', true)
+            //create closure for the queries so that all OR conditions are binded to "is_active=true"
+            ->where(function($q) use ($query) { //specify the dataset to be used 
+                $q->where('first_name', 'like', "%{$query}%") //match against first name
+                  ->orWhere('surname', 'like', "%{$query}%") //match against lastname
+                  ->orWhereRaw("CONCAT(first_name, ' ', surname) LIKE ?", ["%{$query}%"]);// match against both with space in between
+            })
+            ->select('customer_id', 'first_name', 'surname') 
+            ->limit(10)
+            ->get();
+    
+        return response()->json($customers);
     }
 }

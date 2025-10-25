@@ -197,12 +197,6 @@
         lucide.createIcons();
     });
 
-    // Revenue Chart
-    const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
-    if (revenueCtx) {
-        new Chart(revenueCtx, {
-            // Your chart configuration
-        });
-    }
+    
 
 @endsection

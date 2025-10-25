@@ -14,6 +14,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
+
          //Get vehicles from database, 15 at a time
          $vehicles = Vehicle::with('owner')  //all with owner function from model
          ->orderBy('owner_id', 'ASC')  
@@ -39,7 +40,32 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validate input
+        $validated = $request->validate([
+            'registration_number' => 'bail|required|string|unique:vehicles,registration_number',
+            'owner_id' => 'required|integer|exists:customers,customer_id',
+            'make' => 'required|string|max:2000',
+            'model' => 'required|string|string',
+            'description' => 'nullable|string',
+            'year' => 'required|integer|between:1920,' . date('Y'), //a year between 1920 and the current year
+            'colour' => 'nullable|string',
+            'vin_number' => 'nullable|string',
+            'engine_type' => 'required|string',
+            'mileage' => 'nullable|integer',
+            'fuel_type' => 'required|in:petrol,diesel,electric',
+            'transmission' => 'required|in:automatic,manual',
+        ]);
+    
+        $validated['is_active'] = true;
+        $validated['created_by'] = auth()->user()->employee_id;
+    
+        //Create vehicle record
+        $vehicle = Vehicle::create($validated);
+    
+        //redirect to the "show" route
+        return redirect()->route('vehicles.show', $vehicle) 
+           ->with('success', 'Vehicle added successfully!');
+        
     }
 
     /**
@@ -53,13 +79,11 @@ class VehicleController extends Controller
          // Debug: Check what we got
         logger('Vehicle found: ' . $vehicle->registration_number);
     
-        
         // get related jobs
         $jobs = $vehicle->jobs()
         ->orderBy('created_at', 'desc')
         ->paginate(10);
 
-        
 
         // render view
         return view('vehicles.show', compact(
@@ -91,4 +115,6 @@ class VehicleController extends Controller
     {
         //
     }
+
+    
 }

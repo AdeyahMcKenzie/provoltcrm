@@ -30,25 +30,21 @@
                                     </label>
                                             <input type="text" name="registration_number" id="registration_number" placeholder="XA540" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
-                                <!--Vehicle Owner (SELECT MENU)--> 
+                                <!--Vehicle Owner--> 
                                 <div>
                                     <label for="owner" class="block text-sm font-medium text-gray-700 mb-2">
                                         Registered Owner
                                     </label>
-                                    <select name="owner" id="owner"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" >
-                                        <option value="null"> Choose a parish</option>
-                                        <option value="St.Lucy"> St. Lucy </option>
-                                        <option value="St.Peter"> St. Peter </option>
-                                        <option value="St.Andrew"> St. Andrew </option>
-                                        <option value="St.John"> St. John </option>
-                                        <option value="St.Joseph"> St. Joseph </option>
-                                        <option value="St.James"> St. James </option>
-                                        <option value="St.George"> St. George </option>
-                                        <option value="St.Thomas"> St. Thomas </option>
-                                        <option value="St.Michael"> St. Michael </option>
-                                        <option value="St.Phillip"> St. Phillip </option>
-                                        <option value="Christ Church"> Christ Church </option>
-                                    </select>
+                                    <!--Autocomplete text input -->
+                                    <input type="text" id="customer_search" placeholder="Type customer name..." autocomplete="off" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500">
+                
+                                    <input type="hidden" name="owner_id" id="owner_id" required>
+                                    
+                                    <!-- Hidden Div (Only Shows When Results Load) -->
+                                    <div id="customer_results" class="hidden absolute z-10 w-80 mt-1 bg-white border border-gray-300 rounded-lg                     shadow-lg max-h-60 overflow-y-auto">
+                                        <!-- Results will be within this div -->
+                                    </div>
+
                                 </div>
                                 <!-- Make -->
                                 <div>
@@ -94,7 +90,7 @@
                                     <label for="vin" class="block text-sm font-medium text-gray-700 mb-2">
                                         VIN
                                     </label>
-                                    <input type="text" name="vin" id="vin"  placeholder="YH0S5ZNH20D75RXTC"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                    <input type="text" name="vin_number" id="vin_number"  placeholder="YH0S5ZNH20D75RXTC"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                             </div>
 
@@ -149,4 +145,105 @@
         </div>
     </div>
 </div>
+@if ($errors->any())
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@endsection
+@section('scripts')
+
+    //variable declaration
+    const searchInput = document.getElementById('customer_search');//get value from the input field
+    const resultsDiv = document.getElementById('customer_results');
+    const ownerIdInput = document.getElementById('owner_id');
+    let debounceTimer;
+    
+    // search for customers as user types
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);// clear the current debounce timer
+        const query = this.value.trim(); //store user input (use trim to remove spaces)
+        
+        //exit function if input is less than 2 characters
+        if (query.length < 2) {
+            resultsDiv.classList.add('hidden');
+            return;
+        }
+        
+        // debounce - wait 300ms after user stops typing
+        debounceTimer = setTimeout(() => {
+            searchCustomers(query);
+        }, 300);
+    });
+    
+    // Fetch customers from API
+    function searchCustomers(query) {
+        fetch(`/api/customers/search?query=${encodeURIComponent(query)}`)
+            .then(response => response.json()) //convert json from the API to an array
+            .then(customers => {
+                displayResults(customers);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+    
+    // Display search results
+    function displayResults(customers) {
+        if (customers.length === 0) {
+            //Alter innerHTML to show "No customers" message
+            resultsDiv.innerHTML = '<div class="px-4 py-3 text-gray-500 text-sm">No customers found</div>';
+            resultsDiv.classList.remove('hidden'); //make the element visible
+            return;
+        }
+        
+        
+        let html = '';
+        customers.forEach(customer => {
+            //amend the output to the html variable
+            html += `
+                <div class="px-4 py-3 hover:bg-purple-50 cursor-pointer border-b last:border-b-0 customer-item"
+                     data-id="${customer.customer_id}"
+                     data-name="${customer.first_name} ${customer.surname}">
+                    <div class="font-medium text-gray-800">${customer.first_name} ${customer.surname}</div>
+                </div>
+            `;
+        });
+        
+        resultsDiv.innerHTML = html;
+        resultsDiv.classList.remove('hidden');
+        
+        // detect when user selects a customer
+        document.querySelectorAll('.customer-item').forEach(item => {
+            item.addEventListener('click', function() {
+                selectCustomer(this.dataset.id, this.dataset.name);
+            });
+        });
+    }
+    
+    // capture the data from user selection & close dropdown
+    function selectCustomer(customerId, customerName) {
+        searchInput.value = customerName;
+        ownerIdInput.value = customerId;
+        resultsDiv.classList.add('hidden');
+    }
+    
+    // close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsDiv.contains(e.target)) {
+            resultsDiv.classList.add('hidden');
+        }
+    });
+    
+    // show dropdown when input is focused (if has value)
+    searchInput.addEventListener('focus', function() {
+        if (this.value.length >= 2) {
+            searchCustomers(this.value);
+        }
+    });
+
 @endsection

@@ -85,31 +85,10 @@
                                     </div>
                                     <!-- Verify user role for archive button-->
                                     @if (Auth::user()->role == 'manager' || Auth::user()->role == 'admin')
-<<<<<<< HEAD
-                                        <div class="relative group">
-                                        <a href="{{ route('customers.archive', $customer->customer_id) }}" 
-                                           class="w-8 h-8 bg-red-600 hover:bg-red-700 rounded-lg flex items-center justify-center     transition-colors"
-                                           title="View Details">
-                                            <i data-lucide="archive" class="w-4 h-4 text-white"></i>
-=======
-<<<<<<< Updated upstream
-                                        <div class="relative group">
-                                        <a href="{{ route('customers.archive', $customer->customer_id) }}" 
-                                           class="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-lg flex items-center justify-center     transition-colors"
-                                           title="Archive Customer">
-                                            <i data-lucide="archive" class="w-4 h-4 text-white"></i>
-=======
-<<<<<<< Updated upstream
-                                        <button class="w-8 h-8 bg-red-500 rounded-lg  flex items-center justify-center">
-                                            <i data-lucide="archive" class="w-4 h-4 text-white"></i>
-                                        </button>
-=======
                                         <div class="relative group">
                                           <button type="button" onclick="archiveCustomer({{ $customer->id }})" class="w-8 h-8 bg-red-500 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors"
                                            title="Archive Customer">
                                                 <i data-lucide="archive" class="w-4 h-4 text-white"></i>
->>>>>>> Stashed changes
->>>>>>> c4ff5814def4cf1a4b2b32b790057078de193fa5
                                              <!-- Tooltip bubble -->
                                             <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col items-center animate-fade-in">
                                                 <div class="bg-gray-800 text-white text-xs font-medium rounded-full py-1 px-3 shadow-lg whitespace-nowrap">
@@ -118,19 +97,8 @@
                                                 <!-- little arrow (bubble tail) -->
                                                 <div class="w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
                                             </div>
-<<<<<<< HEAD
-                                        </a>
-                                    </div>
-=======
-<<<<<<< Updated upstream
-                                        </a>
-                                    </div>
-=======
                                         </button>
                                     </div>
->>>>>>> Stashed changes
->>>>>>> Stashed changes
->>>>>>> c4ff5814def4cf1a4b2b32b790057078de193fa5
                                     @endif
                                 </div>
                             </td>
