@@ -97,7 +97,13 @@ class VehicleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //get vehicle record
+        $vehicle = Vehicle::with('owner')->findOrFail($id);
+
+        //return the edit view 
+        return view('vehicles.edit', compact(
+            'vehicle'
+        ));
     }
 
     /**
@@ -105,7 +111,32 @@ class VehicleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //get vehicle record
+        $vehicle = Vehicle::with('owner')->findOrFail($id);
+
+        //Validate input
+        $validated = $request->validate([
+            'registration_number' => '|required|string',
+            'owner_id' => 'required|integer|exists:customers,customer_id',
+            'make' => 'required|string|max:2000',
+            'model' => 'required|string|string',
+            'description' => 'nullable|string',
+            'year' => 'required|integer|between:1920,' . date('Y'), //a year between 1920 and the current year
+            'colour' => 'nullable|string',
+            'vin_number' => 'nullable|string',
+            'engine_type' => 'required|string',
+            'mileage' => 'nullable|integer',
+            'fuel_type' => 'required', //in:petrol,diesel,electric (put this back when db is cleaned up)
+            'transmission' => 'required', //|in:automatic,manual (put back when db is cleaned up)
+        ]);
+
+            //Mass update
+            $vehicle->update($validated);
+
+            //redirect to the "show" route
+            return redirect()->route('vehicles.show', $vehicle)
+            ->with('success', 'Vehicle updated successfully!');
+
     }
 
     /**
