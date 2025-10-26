@@ -1,9 +1,9 @@
-{{-- resources/views/vehicles/create.blade.php --}}
+{{-- resources/views/vehicles/edit.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Customers - ProVoltCRM')
-@section('page-title', 'Register Vehicles')
-@section('page-description', 'Register new vehicles.')
+@section('page-title', 'Update Vehicle Records')
+@section('page-description', 'Update vehicle records.')
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-8 ">
@@ -20,12 +20,13 @@
                 
             </div>
             <h2 class="text-lg font-medium text-left"> 
-                Register a New Vehicle
+                Update a Vehicle Record
             </h2>
             <p class="ml-4 pt-4 text-sm"> All fields marked with <span class="text-red-500">*</span> are required. </p>
             <!-- Register vehicle form-->           
-            <form action="{{ route('vehicles.store') }}" method="POST">
+            <form action="{{ route('vehicles.update', $vehicle->registration_number) }}" method="POST">
                 @csrf
+                @method ('PATCH')
                 <!-- Align Form Contents -->
                 <div class="flex justify-center m-5 pt-5">
                     <div class="w-full max-w-6xl">
@@ -40,7 +41,7 @@
                                     <label for="registration_number" class="block text-sm font-medium text-gray-700 mb-2">
                                         Registration Number <span class="text-red-500">*</span>
                                     </label>
-                                            <input type="text" name="registration_number" id="registration_number" placeholder="XA540" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
+                                            <input type="text" name="registration_number" id="registration_number" placeholder="XA540" value="{{$vehicle->registration_number}}"class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                 <!--Vehicle Owner--> 
                                 <div>
@@ -48,9 +49,11 @@
                                         Registered Owner <span class="text-red-500">*</span>
                                     </label>
                                     <!--Autocomplete text input -->
-                                    <input type="text" id="customer_search" placeholder="Type customer name..." autocomplete="off" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500" required>
+                                    <input type="text" id="customer_search" 
+                                    value="{{$vehicle->owner->first_name}} {{$vehicle->owner->surname}}" 
+                                    autocomplete="off" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500" required>
                 
-                                    <input type="hidden" name="owner_id" id="owner_id" required>
+                                    <input type="hidden" name="owner_id" id="owner_id" value="{{$vehicle->owner_id}}" required>
                                     
                                     <!-- Hidden Div (Only Shows When Results Load) -->
                                     <div id="customer_results" class="hidden absolute z-10 w-80 mt-1 bg-white border border-gray-300 rounded-lg                     shadow-lg max-h-60 overflow-y-auto">
@@ -63,14 +66,14 @@
                                     <label for="make" class="block text-sm font-medium text-gray-700 mb-2">
                                         Make <span class="text-red-500">*</span>
                                     </label>
-                                            <input type="text" name="make" id="make" placeholder="Nissan" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
+                                            <input type="text" name="make" id="make" value="{{$vehicle->make}}" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                 <!--Model-->
                                 <div>
                                     <label for="model" class="block text-sm font-medium text-gray-700 mb-2">
                                         Model <span class="text-red-500">*</span>
                                     </label>
-                                            <input type="text" name="model" id="model" placeholder="Tida" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
+                                            <input type="text" name="model" id="model" value="{{$vehicle->model}}" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                
                             </div>
@@ -81,28 +84,31 @@
                                     <label for="year" class="block text-sm font-medium text-gray-700 mb-2">
                                         Year <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="number" name="year" id="year"  placeholder="2016" min="1980" max="2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
+                                    <input type="number" name="year" id="year"  value="{{$vehicle->year}}" min="1980" max="2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                 </div>
                                 <!-- Colour -->
                                 <div>
                                     <label for="colour" class="block text-sm font-medium text-gray-700 mb-2">
                                         Colour
                                     </label>
-                                    <input type="text" name="colour" id="colour"  placeholder="Silver" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                    <input type="text" name="colour" id="colour"  value="{{$vehicle->colour ?? '' }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                                 <!-- Mileage -->
                                 <div>
                                     <label for="mileage" class="block text-sm font-medium text-gray-700 mb-2">
                                         Mileage
                                     </label>
-                                    <input type="number" name="mileage" id="mileage"  placeholder="12000"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                    <input type="number" name="mileage" id="mileage" placeholder="12000"  
+                                    value="{{$vehicle->mileage ?? '' }}"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                                 <!-- VIN -->
                                 <div>
                                     <label for="vin" class="block text-sm font-medium text-gray-700 mb-2">
                                         VIN
                                     </label>
-                                    <input type="text" name="vin_number" id="vin_number"  placeholder="YH0S5ZNH20D75RXTC"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
+                                    <input type="text" name="vin_number" id="vin_number"  placeholder="YH0S5ZNH20D75RXTC" 
+                                    value="{{$vehicle->vin_number ?? '' }}" 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">
                                 </div>
                             </div>
 
@@ -113,7 +119,7 @@
                                     <label for="engine_type" class="block text-sm font-medium text-gray-700 mb-2">
                                         Engine Type <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text" name="engine_type" id="engine_type" placeholder="V8" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
+                                    <input type="text" name="engine_type" id="engine_type" placeholder="V8" value="{{$vehicle->engine_type ?? '' }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
                                             
                                 </div>
                                                                  
@@ -122,12 +128,19 @@
                                     <label for="fuel_type" class="block text-sm font-medium text-gray-700 mb-2">
                                         Fuel Type <span class="text-red-500">*</span>
                                     </label>
+                                        <!-- Arry of Fuel Types-->
+                                        @php
+                                            $fuel_types = ['Diesel', 'Petrol'];
+                                        @endphp
                                     
                                         <select name="fuel_type" id="fuel_type"  class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
-                                                <option value="null"> Select a fuel type </option>
-                                                <option value="diesel"> Diesel </option>
-                                                <option value="petrol"> Petrol </option>
-                                             
+                                            <!-- Set the fuel type to match the vehicle record -->
+                                            @foreach ($fuel_types as $fuel_type)
+                                                <option value="{{ $fuel_type }}" 
+                                                    {{ old('fuel_type', $vehicle->fuel_type) === $fuel_type ? 'selected' :      '' }}>
+                                                        {{ $fuel_type }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     
                                 </div>
@@ -136,19 +149,26 @@
                                     <label for="transmission" class="block text-sm font-medium text-gray-700 mb-2">
                                         Transmission <span class="text-red-500">*</span>
                                     </label>
+                                    <!-- Arry of Transmission Types-->
+                                        @php
+                                            $transmission_types = ['Automatic', 'Manual'];
+                                        @endphp
                                     <select name="transmission" id="transmission"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500" required>
-                                                <option value="null"> Select a tranmission </option>
-                                                <option value="automatic"> Automatic </option>
-                                                <option value="manual"> Manual </option>
-                                             
-                                        </select>
+                                                 <!-- Set the fuel type to match the vehicle record -->
+                                            @foreach ($transmission_types as $transmission)
+                                                <option value="{{ $transmission }}" 
+                                                    {{ old('transmission', $vehicle->transmission) === $transmission ? 'selected' :      '' }}>
+                                                        {{ $transmission }}
+                                                </option>
+                                            @endforeach
+                                    </select>
                                 </div>
                                  <!-- Description -->
                                  <div>
                                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
                                         Description
                                     </label>
-                                    <textarea name="description" id="description" placeholder="Write a brief description about the vehicle here" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500"></textarea>
+                                    <textarea name="description" id="description" placeholder="Write a brief description about the vehicle here"  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-focus:ring-purple-500">{{$vehicle->description ?? '' }}</textarea>
                                 </div>
                                 
                             </div>

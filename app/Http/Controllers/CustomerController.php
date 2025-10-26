@@ -105,8 +105,8 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
 
         $validated = $request->validate([
-            'first_name'   => 'required|string|max:255',
-            'surname'     => 'required|string|max:255',
+            'first_name'   => 'required|string',
+            'surname'     => 'required|string',
             'notes'       => 'nullable|string|max:2000',
             'street_address'      => 'nullable|string|max:255',
             'province'    => 'nullable|string|max:255',
@@ -115,7 +115,6 @@ class CustomerController extends Controller
             'contact_number'     => 'required|string|max:20',
             'alternative_contact'    => 'nullable|string|max:20',
             'preferred_contact_method'   => 'required|in:email,phone',
-            'is_active' => 'required|boolean',
         ]);
 
         // Mass update
@@ -123,7 +122,7 @@ class CustomerController extends Controller
 
         //redirect to the "show" route
         return redirect()->route('customers.show', $customer)
-                         ->with('success', 'Customer created successfully!');
+                         ->with('success', 'Customer updated successfully!');
     }
 
     /**
