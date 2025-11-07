@@ -12,6 +12,7 @@ use App\Models\User;
  */
 class JobFactory extends Factory
 {
+    use HasFactory;
     /**
      * Define the model's default state.
      *

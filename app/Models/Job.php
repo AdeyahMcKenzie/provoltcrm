@@ -38,11 +38,15 @@ class Job extends Model
 
     //Relationships
     
+    public function jobServices()
+    {
+        return $this->hasMany(JobService::class, 'job_id');
+    }
     //create relationship with services
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'jobs_services', 'job_id', 'service_id')
-                ->withPivot('service_price', 'quantity', 'technician_notes', 'start_time', 'completion_time')
+        return $this->belongsToMany(Service::class, 'jobs_services','job_id','service_id')
+                ->withPivot(['service_price', 'quantity', 'created_at'])
                 ->withTimestamps();
     }
 

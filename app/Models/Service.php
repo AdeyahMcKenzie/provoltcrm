@@ -28,14 +28,20 @@ class Service extends Model
         'warranty_period_days' => 'integer',
     ];
 
+    public function jobServices()
+    {
+        return $this->hasMany(JobService::class, 'service_id');
+    }
     
     // relationship to jobs
     public function jobs()
     {
-        return $this->belongsToMany(Job::class, 'jobs_services', 'service_id', 'job_id')
-                ->withPivot('service_price', 'quantity', 'technician_notes', 'start_time', 'completion_time')
+        return $this->belongsToMany(Job::class, 'jobs_services','job_id','service_id')
+                ->withPivot(['service_price', 'quantity', 'ceated_at'])
                 ->withTimestamps();
     }
+
+   
 
     /*
     public function quotes()
