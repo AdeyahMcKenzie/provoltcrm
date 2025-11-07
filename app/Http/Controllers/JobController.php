@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Job;
 
 class JobController extends Controller
 {
@@ -11,7 +12,15 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        //Fetch Job Records with Technician
+        $jobs = Job::with('technicianUser') 
+        ->orderBy('created_at','asc')
+        -> paginate(15);
+
+        return view('jobs.index',compact(
+            'jobs'
+        ));
+
     }
 
     /**
