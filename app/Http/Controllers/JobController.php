@@ -35,7 +35,16 @@ class JobController extends Controller
      */
     public function show(string $id)
     {
+<<<<<<< Updated upstream
         //
+=======
+
+        $job = Job::with('vehicle','customer','services')->findOrFail($id);
+
+        return view('jobs.show', compact(
+            'job'
+        ));
+>>>>>>> Stashed changes
     }
 
     /**
