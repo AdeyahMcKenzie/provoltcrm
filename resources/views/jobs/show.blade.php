@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-<div>
-    <!-- The only way to do great work is to love what you do. - Steve Jobs -->
-=======
 {{-- resources/views/jobs/show.blade.php --}}
 @extends('layouts.app')
 
@@ -117,5 +113,4 @@
             
         </div>
     </div>
->>>>>>> Stashed changes
 </div>
