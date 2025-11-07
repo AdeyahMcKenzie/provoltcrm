@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('service_id');
             $table->decimal('service_price', 8, 2);
             $table->integer('quantity')->default(1);
-            $table->text('technician_notes')->nullable();
             $table->dateTime('start_time')->nullable();
             $table->dateTime('completion_time')->nullable();
             $table->timestamps();

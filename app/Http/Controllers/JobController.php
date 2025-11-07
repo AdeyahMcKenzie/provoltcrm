@@ -45,7 +45,7 @@ class JobController extends Controller
     public function show(string $id)
     {
 
-        $job = Job::with('vehicle','customer')->findOrFail($id);
+        $job = Job::with('vehicle','customer','services')->findOrFail($id);
 
         return view('jobs.show', compact(
             'job'
@@ -54,7 +54,7 @@ class JobController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
+    */
     public function edit(string $id)
     {
         //

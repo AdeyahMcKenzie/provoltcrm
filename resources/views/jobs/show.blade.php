@@ -42,8 +42,8 @@
             </div>
         </div>
         <!-- Second Row : Vehicle Info  -->
-        <div class="mt-10">
-            <table class="min-w-full text-left ">
+        <div class="mt-10 overflow-auto">
+            <table class="min-w-full  text-left ">
                 <!-- Table Headers -->
                 <thead class="bg-sky-900 text-white">
                     <tr>
@@ -90,18 +90,28 @@
                 <thead class="bg-sky-900 text-white">
                     <tr>
                         <th class="px-4 py-2 rounded-tl-lg">Service</th>
-                        <th class="px-4 py-2 rounded-tr-lg">Description</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th class="px-4 py-2 rounded-tr-lg">Price</th>
                     </tr>
                 </thead>
                 <tbody class="text-left">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-2 rounded-bl-lg border">{{$job->job_id}}</td>
-                        <td class="px-4 py-2 rounded-br-lg border">{{$job->vehicle->year}}</td>
-                    </tr>
+                    @foreach($job->services as $service)
+                        <tr class="hover:bg-gray-50">
+                            <!-- Access name and description directly -->
+                            <td class="border px-4 py-2">{{ $service->service_name }}</td>
+                            <td class="border px-4 py-2">{{ $service->description ?? '—' }}</td>
+                            <td class="border px-4 py-2">{{ $service->pivot->quantity }}</td>
+                            <td class="border px-4 py-2">{{ $service->pivot->service_price }}</td>
+                        </tr>
+                    @endforeach
+                    
                 </tbody>
             </table>
         </div>
-
+        <div class=" mt-10">
+            
+        </div>
     </div>
 </div>
 @endsection
