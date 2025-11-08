@@ -4,9 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Traits\AutoComplete;
 
 class CustomerController extends Controller
 {
+    //Traits & trait methods
+    use AutoComplete;
+
+    /**
+     * Get config data for search API
+     */
+    protected function getConfig(): array
+    {
+        return [
+            'model' => Customer::class,
+            'searchFields' => ['first_name', 'surname'],
+            'selectFields' => ['customer_id', 'first_name', 'surname'],
+            'status' => 'true',
+        ];
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -152,31 +169,5 @@ class CustomerController extends Controller
 
     }
 
-    /**
-     * API for customer autocomplete text input field
-     */
-    public function search(Request $request)
-    {
-        //retrieve query value from frontend
-        $query = $request->get('query');
     
-        //don't run the search if input is less than 2 characters
-        if (strlen($query) < 2) {
-            return response()->json([]);
-        }
-    
-        //filter through active customers
-        $customers = Customer::where('is_active', true)
-            //create closure for the queries so that all OR conditions are binded to "is_active=true"
-            ->where(function($q) use ($query) { //specify the dataset to be used 
-                $q->where('first_name', 'like', "%{$query}%") //match against first name
-                  ->orWhere('surname', 'like', "%{$query}%") //match against lastname
-                  ->orWhereRaw("CONCAT(first_name, ' ', surname) LIKE ?", ["%{$query}%"]);// match against both with space in between
-            })
-            ->select('customer_id', 'first_name', 'surname') 
-            ->limit(10)
-            ->get();
-    
-        return response()->json($customers);
-    }
 }
